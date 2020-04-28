@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>DJango Ajax Post Comments App</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <script type='text/javascript'>
+	$(document).ready(
+		function() {
+
+                $("#message").focus();
+                $.ajax({
+                    type : "GET",
+                    url : "/comments",
+                    dataType : "json",
+                    success : function(response) {
+                        $.each(response, function(i, messages) {
+                            $.each(messages, function(i, message) {
+                                var msg_data = "<div id='msg"+message.id+"'>"+ message.message + "</div><hr/>";
+                                $(msg_data).appendTo("#post-cards");
+                            });
+                        });
+                        $("#message").focus();
+                    }
+                });
+				$("#post-message").submit(function (e) {
+					 // preventing from page reload and default actions
+						e.preventDefault();
+					// serialize the data for sending the form data.
+						var serializedData = $(this).serialize();
+					$.ajax({
+						type: 'POST',
+						url: "comments",
+						data: serializedData,
+						success : function(response) {
+							var msg_data = "<div class='alert alert-success'>"+response.success+"</div>";
+                            $(msg_data).appendTo("#statusMessage");
+                            $("#post-cards").prepend("<div>"+ response.message.message + "</div><hr/>");
+
+						},
+						error: function (response) {
+							var msg_data = "<div class='alert alert-danger'>"+response.statusText+"</div>";
+                            $(msg_data).appendTo("#statusMessage");
+
+						}
+					});
+					$('#post-message')[0].reset();
+					 setTimeout(function(){
+                        $('.alert').hide('slow');
+                     }, 3000);
+					return false;
+				});
+			});
+
+    </script>
+    <style>
+	.alert{
+		position:relative;
+		padding: 0rem 0rem;
+		margin-bottom:1rem;
+	}
+
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <span class="navbar-text">
+    	AJAX in Flask Python
+  </span>
+</nav>
+<div class="container-fluid">
+    <div id="wrapper">
+        <div id="content">
+            <div class="container-fluid">
+                <div class="container">
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <!-- Dropdown Card Example -->
+                                <div class="card shadow mb-4">
+                                    <!-- Card Header - Dropdown -->
+                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary">Post Messages </h6>
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+                                        <div id="statusMessage"></div>
+                                        <form id="post-message">
+                                            <!-- Text input-->
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="message">Enter
+                                                    Comment</label>
+                                                <div class="col-md-4">
+                                                    <input id="message" name="message" type="text"
+                                                           placeholder="Enter Comment"
+                                                           class="form-control input-md">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary col-md-12">Create Post</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr/>
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                <!-- Dropdown Card Example -->
+                                <div class="card shadow mb-4">
+                                    <!-- Card Header - Dropdown -->
+                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary">Post Messages </h6>
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1"
+                                                 id="post-cards">
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
