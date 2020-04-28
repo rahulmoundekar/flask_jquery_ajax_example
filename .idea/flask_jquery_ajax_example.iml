@@ -4,5 +4,7 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="flask_sqlalchemy_one_to_many_relationship_example" />
+    <orderEntry type="module" module-name="file_upload_in_flask" />
   </component>
 </module>

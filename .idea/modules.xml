@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../file_upload_in_flask/.idea/file_upload_in_flask.iml" filepath="$PROJECT_DIR$/../file_upload_in_flask/.idea/file_upload_in_flask.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/flask_jquery_ajax_example.iml" filepath="$PROJECT_DIR$/.idea/flask_jquery_ajax_example.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../flask_sqlalchemy_one_to_many_relationship_example/.idea/flask_sqlalchemy_one_to_many_relationship_example.iml" filepath="$PROJECT_DIR$/../flask_sqlalchemy_one_to_many_relationship_example/.idea/flask_sqlalchemy_one_to_many_relationship_example.iml" />
     </modules>
   </component>
 </project>
